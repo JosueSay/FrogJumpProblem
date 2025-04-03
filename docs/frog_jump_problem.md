@@ -46,7 +46,7 @@ Salida: 30
 
 ## 📐 Restricciones y Supuestos
 
-- Número de casos de prueba: `1 <= T <= 10`
+- Número de casos de prueba: `T >= 30`
 - Cantidad de escalones: `1 <= N <= 10^5`
 - Altura de cada escalón: `0 <= heights[i] <= 10^4`
 - La rana inicia siempre en el primer escalón.
