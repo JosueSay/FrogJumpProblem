@@ -2,8 +2,6 @@
 
 Este documento complementa el análisis empírico del problema **Frog Jump**, detallando el **funcionamiento interno** de los dos enfoques aplicados: **Divide and Conquer (DaC)** y **Programación Dinámica (PD)**. Incluye ejemplos específicos del código donde se implementa cada parte de la lógica mencionada.
 
----
-
 ## ¿Qué es Divide and Conquer (DaC)?
 
 ### Descripción general
@@ -17,14 +15,16 @@ Este documento complementa el análisis empírico del problema **Frog Jump**, de
 ### 🐸 Aplicación en Frog Jump
 
 En este problema, la rana puede llegar al escalón `n`:
+
 - Desde el escalón `n-1` con un salto de 1.
 - Desde el escalón `n-2` con un salto de 2.
 
 Cada salto tiene un costo de energía:
 
-\[E(n) = \min( E(n-1) + |h_n - h_{n-1}|,\; E(n-2) + |h_n - h_{n-2}| )\]
+$$E(n) = \min( E(n-1) + |h_n - h_{n-1}|,\; E(n-2) + |h_n - h_{n-2}| )$$
 
-###  Código de ejemplo: Divide and Conquer puro
+### Código de ejemplo: Divide and Conquer puro
+
 ```python
 def minEnergyFrogJumpDaC(heights, n):
     if n == 0:
@@ -41,31 +41,33 @@ def minEnergyFrogJumpDaC(heights, n):
 ```
 
 ### ❗ Desventaja
+
 - Esta versión recalcula los mismos subproblemas muchas veces (por ejemplo, `E(3)`, `E(2)`...), lo que lleva a una complejidad **exponencial**:
 
-\[ T(n) = O(2^n) \]
+$$T(n) = O(2^n)$$
 
 - No se almacena nada: **sin memorización**.
 
----
+## ¿Qué es Programación Dinámica (PD)?
 
-##  ¿Qué es Programación Dinámica (PD)?
-
-###  Descripción general
+### Descripción general
 
 La **Programación Dinámica** optimiza problemas que tienen:
+
 - **Subproblemas traslapados**: el mismo cálculo ocurre muchas veces.
 - **Subestructura óptima**: la solución óptima depende de las soluciones óptimas de subproblemas.
 
 PD **almacena** los resultados ya calculados para no repetirlos.
 
-###  Enfoque Bottom-Up (Tabulación)
+### Enfoque Bottom-Up (Tabulación)
 
 En vez de usar recursión, se construye la solución desde abajo hacia arriba:
+
 - Primero se calcula la energía para `E(0)`, `E(1)`...
 - Luego `E(2)` se basa en esos dos valores anteriores.
 
-###  Código de ejemplo: Programación Dinámica Bottom-Up
+### Código de ejemplo: Programación Dinámica Bottom-Up
+
 ```python
 def minEnergyFrogJumpDP(heights):
     n = len(heights)
@@ -90,13 +92,12 @@ def minEnergyFrogJumpDP(heights):
 ```
 
 ### ✅ Ventajas
+
 - No hay llamadas recursivas.
 - No se recalculan subproblemas.
 - Complejidad temporal y espacial:
 
-\[ T(n) = O(n),\quad\; S(n) = O(1) \]
-
----
+$$T(n) = O(n),\quad\; S(n) = O(1)$$
 
 ## 🆚 Comparación entre DaC y PD
 
@@ -109,9 +110,7 @@ def minEnergyFrogJumpDP(heights):
 | Escalabilidad                 | Mala                         | Excelente                          |
 | Aplicación práctica           | Solo para tamaños pequeños   | Recomendado para casos grandes     |
 
----
-
-##  Conclusión
+## Conclusión
 
 - **Divide and Conquer** es útil para **entender la lógica del problema** de forma natural y recursiva.
 - **Programación Dinámica**, en cambio, se basa en la **eficiencia**, evitando cálculos repetidos.
@@ -120,4 +119,3 @@ def minEnergyFrogJumpDP(heights):
 > Para optimizar aún más DaC, se puede usar **memoización**: almacenar los resultados ya calculados. Esa técnica se conoce como **PD Top-Down**.
 
 Este entendimiento es crucial para comparar enfoques algorítmicos y tomar decisiones basadas en rendimiento, legibilidad o complejidad del problema.
-

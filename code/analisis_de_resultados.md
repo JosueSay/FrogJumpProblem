@@ -10,44 +10,38 @@ El objetivo es comparar el desempeño práctico de ambos algoritmos a través de
 - El análisis gráfico del comportamiento temporal.
 - La validación empírica del análisis teórico realizado previamente.
 
----
-
 ## 📖 Recordatorio del Problema
 
 Una rana se encuentra en el primer escalón de una escalera con alturas dadas por un arreglo `heights[]`, y desea alcanzar el último escalón. Puede saltar 1 o 2 escalones, y cada salto consume una cantidad de energía igual a la diferencia absoluta de alturas:
 
-\(\text{Energía} = |\text{height}[i] - \text{height}[j]|\)
+$\text{Energía} = |\text{height}[i] - \text{height}[j]|$
 
 Se desea **minimizar** la energía total consumida desde el primer al último escalón.
 
----
-
-##  Análisis Teórico de Complejidad
+## Análisis Teórico de Complejidad
 
 ### Divide and Conquer (sin memorización)
 
 El algoritmo DaC divide el problema en dos llamadas recursivas:
 
-\(E(n) = \min\left( E(n-1) + |h_n - h_{n-1}|,\; E(n-2) + |h_n - h_{n-2}| \right)\)
+$E(n) = \min\left( E(n-1) + |h_n - h_{n-1}|,\; E(n-2) + |h_n - h_{n-2}| \right)$
 
 Cada llamada genera dos nuevas llamadas, formando un árbol de recursión similar a Fibonacci. Su complejidad es:
 
-\(T(n) = T(n-1) + T(n-2) + O(1) \Rightarrow O(2^n)\)
+$T(n) = T(n-1) + T(n-2) + O(1) \Rightarrow O(2^n)$
 
 ### Programación Dinámica (Bottom-Up)
 
 En la versión PD, se evita la recursión calculando los resultados de manera iterativa desde la base:
 
-\(\text{dp}[i] = \min\left(\text{dp}[i-1] + |h_i - h_{i-1}|,\; \text{dp}[i-2] + |h_i - h_{i-2}|\right)\)
+$\text{dp}[i] = \min\left(\text{dp}[i-1] + |h_i - h_{i-1}|,\; \text{dp}[i-2] + |h_i - h_{i-2}|\right)$
 
 El algoritmo recorre el arreglo una vez y usa constantes auxiliares `prev1` y `prev2`, logrando:
 
-- **Complejidad temporal:** \(O(n)\)
-- **Complejidad espacial:** \(O(1)\)
+- **Complejidad temporal:** $O(n)$
+- **Complejidad espacial:** $O(1)$
 
----
-
-##  Código del Análisis Empírico
+## Código del Análisis Empírico
 
 Se implementó el siguiente código en Python para:
 
@@ -136,40 +130,33 @@ plt.tight_layout()
 plt.show()
 ```
 
----
-
-##  Resultados Empíricos
+## Resultados Empíricos
 
 ### ▶ Programación Dinámica (Bottom-Up)
 
 - El tiempo de ejecución crece de forma **lineal** con respecto al tamaño de entrada `N`.
 - Incluso para `N = 10,000`, el tiempo sigue siendo < 0.003 segundos.
-- Esto confirma empíricamente la complejidad teórica \(O(n)\).
+- Esto confirma empíricamente la complejidad teórica $O(n)$.
 
 ### ▶ Divide and Conquer (Puro)
 
 - El tiempo de ejecución se incrementa **exponencialmente** a partir de `N = 20`.
 - A `N = 30`, el tiempo supera los **0.25 segundos**.
-- Esto valida la complejidad \(O(2^n)\).
+- Esto valida la complejidad $O(2^n)$.
 
----
-
-##  Comparación y Conclusiones
+## Comparación y Conclusiones
 
 | Enfoque            | Complejidad | Escalabilidad | Tiempo (N=10,000)                 |
 | ------------------ | ----------- | ------------- | --------------------------------- |
-| Divide and Conquer | \(O(2^n)\)  | Mala          | Inviable (se detiene antes de 50) |
-| PD (Bottom-Up)     | \(O(n)\)    | Excelente     | \~0.0027s                         |
+| Divide and Conquer | $O(2^n)$  | Mala          | Inviable (se detiene antes de 50) |
+| PD (Bottom-Up)     | $O(n)$    | Excelente     | \~0.0027s                         |
 
 - El enfoque **Programación Dinámica** es claramente superior para casos grandes.
 - **DaC** es útil para enseñar recursión, pero **no es práctico** para entradas grandes sin memorización.
 - La comparación empírica **respalda perfectamente** lo demostrado en el análisis teórico.
 
----
-
-##  Recomendaciones
+## Recomendaciones
 
 - Para escalabilidad, siempre se debe preferir **PD bottom-up**.
 - En caso de querer usar DaC, se recomienda agregar **memoización** (PD top-down).
 - El análisis empírico es clave para validar lo que se deduce de manera teórica, y debe integrarse siempre en proyectos algorítmicos.
-
