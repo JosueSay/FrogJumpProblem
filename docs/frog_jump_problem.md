@@ -1,4 +1,4 @@
-# Frog Jump (Minimización de energía en escaleras) 🐸
+# Frog Jump Problem (Minimización de energía en escaleras) 🐸
 
 ## 📝 Descripción del Problema
 
