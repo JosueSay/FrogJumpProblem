@@ -117,7 +117,7 @@ Como el algoritmo **siempre divide en dos subproblemas**, el número de nodos en
 | 4         | $8$          | Cada nodo del paso anterior se divide |
 | 5         | $16$         | Sigue la misma lógica |
 
-![Diagrama de Recursividad Por Nivel](arbol_fjp.png){height=150px}
+![Diagrama de Recursividad Por Nivel](../images/arbol_fjp.png)
 
 El número de nodos en el **último nivel** es aproximadamente:
 
