@@ -195,3 +195,79 @@ if __name__ == "__main__":
 ```markdown
 Energía mínima: 20
 ```
+
+## 🧠 Análisis y Tasa de Crecimiento
+
+### Paso 1: Identificación de variables
+
+- `n = len(heights)`  
+  Toma tiempo **constante**, denotamos como $c_1$
+
+- Condición `if n == 1:`  
+  También es constante, $c_2$
+
+- Condición `prev2`, `prev1`  
+  También es constante, $c_3$ y $c_4$
+
+### Paso 2: Ciclo principal
+
+```python
+for i in range(2, n):
+```
+
+- Recorre desde `i = 2` hasta `n-1` haciendo un total de $(n - 1) - (2) + 1 = n - 2$ iteraciones.
+
+### Paso 3: Operaciones dentro del ciclo
+
+Cada iteración realiza:
+
+- Dos operaciones `abs(...)`:  
+  Cada una toma tiempo constante $c_5$
+
+- Una `min(...)`:  
+  Constante $c_6$
+
+- Dos asignaciones:  
+  Constantes $c_7, c_8$
+
+Entonces, cada iteración toma tiempo:
+
+$$
+c_{\text{iter}} = c_5 + c_5 + c_6 + c_7 + c_8 = c
+$$
+
+Como se ejecuta $n - 2$ veces:
+
+$$
+T_{\text{loop}}(n) = c(n - 2)
+$$
+
+### Paso 4: Total de tiempo
+
+Sumamos todo:
+
+$$
+T(n) = c_1 + c_2 + c_3 + c_4 + c(n - 2)
+$$
+
+$$
+T(n) = cn + (c_1 + c_2 + c_3 + c_4 - 2c)
+$$
+
+Esto es una **función lineal**:  
+$$
+T(n) \in \Theta(n)
+$$
+
+- **Mejor caso**: igual que el peor, ya que siempre ejecuta el bucle completo.
+- **Peor caso**: mismo tiempo que el mejor.
+- Entonces:
+  $$
+  T(n) \in O(n), \quad T(n) \in \Omega(n), \quad T(n) \in \Theta(n)
+  $$
+
+El algoritmo tiene una tasa de crecimiento **lineal**, ya que realiza una cantidad constante de operaciones por iteración sobre un rango de tamaño $n - 2$. Al no depender de condiciones internas ni bucles anidados, su complejidad asintótica es:
+
+$$
+T(n) \in \Theta(n)
+$$

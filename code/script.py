@@ -1,3 +1,5 @@
+# Referencia: https://dpythoncodenemesis.medium.com/frog-jump-1d-dp-aa57fe7ec096
+
 import random
 import time
 import matplotlib.pyplot as plt
@@ -151,4 +153,4 @@ def comparar_algoritmos(modo_test=True):
 
 
 
-comparar_algoritmos(modo_test=True) # Cambia a False para validar resultados
+comparar_algoritmos(modo_test=False) # Cambia a False para validar resultados
