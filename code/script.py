@@ -1,4 +1,5 @@
-# Referencia: https://dpythoncodenemesis.medium.com/frog-jump-1d-dp-aa57fe7ec096
+# Referencia algoritmo dp: https://dpythoncodenemesis.medium.com/frog-jump-1d-dp-aa57fe7ec096
+# Referencia alggoritmo dac: https://medium.com/@avnishaks/frog-jump-251eed013cf8
 
 import random
 import time

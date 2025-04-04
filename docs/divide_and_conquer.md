@@ -51,19 +51,39 @@ $$
 
 Dibujando el árbol de recursión se observa:
 
-```plaintext
-T(n)
-├─ T(n-1)
-│  ├─ T(n-2)
-│  │  ├─ T(n-3)
-│  │  └─ T(n-4)
-│  └─ T(n-3)
-│     ├─ T(n-4)
-│     └─ T(n-5)
-└─ T(n-2)
-   ├─ T(n-3)
-   └─ T(n-4)
+```mermaid
+graph TD
+    Tn["T(n)"]
+    Tn1["T(n-1)"]
+    Tn2["T(n-2)"]
+    Tn --> Tn1
+    Tn --> Tn2
+
+    Tn1a["T(n-2)"]
+    Tn1b["T(n-3)"]
+    Tn1 --> Tn1a
+    Tn1 --> Tn1b
+
+    Tn1a1["T(n-3)"]
+    Tn1a2["T(n-4)"]
+    Tn1a --> Tn1a1
+    Tn1a --> Tn1a2
+
+    Tn1b1["T(n-4)"]
+    Tn1b2["T(n-5)"]
+    Tn1b --> Tn1b1
+    Tn1b --> Tn1b2
+
+    Tn2a["T(n-3)"]
+    Tn2b["T(n-4)"]
+    Tn2 --> Tn2a
+    Tn2 --> Tn2b
 ```
+
+#### **Paso 1 - Determinar la Altura del Árbol:**
+
+El árbol no crece de manera **proporcional**, ya que la rama **izquierda** resta $n-1$ al tamaño y la **derecha** $n-2$.  
+Si tomamos el **camino más largo** (la rama izquierda), podemos determinar que **para el peor de los casos** el árbol tendrá aproximadamente **$O(n)$ niveles**, porque en cada iteración se resta **1** hasta llegar a $n = 1$. Utilizando un ejemplo para 4 escalones:
 
 ```mermaid
 graph TD
@@ -81,6 +101,12 @@ style E1a stroke:#900,stroke-width:1px
 style E1b stroke:#900,stroke-width:1px
 ```
 
+Por lo tanto, la altura del árbol es aproximadamente:
+
+$$
+O(n)
+$$
+
 Podemos observar que el árbol es muy similar al árbol de recurrencia del problema de Fibonacci. Esto implica que el crecimiento del tiempo es exponencial.  
 
 Específicamente, la recurrencia coincide con la sucesión de Fibonacci, cuya solución conocida es exponencial:
@@ -89,29 +115,155 @@ $$
 T(n) = O(2^n)
 $$
 
-### **Resolución mediante Método de Sustitución (inducción matemática)**
+#### **Paso 2 - Determinar la Cantidad de Nodos en Cada Nivel:**
 
-Para verificar formalmente la solución mediante inducción matemática (método de sustitución):
+![Diagrama de Recursividad Por Nivel](../images/arbol_fjp.png)
 
-- **Hipótesis**: $T(n) \leq c \cdot 2^n$ para alguna constante $c > 0$.
+Como el algoritmo **siempre divide en dos subproblemas**, el número de nodos en cada nivel es $2^k$:
 
-Reemplazamos en la recurrencia:
+| Iteración | Cantidad de Nodos | Explicación |
+|-----------|------------------|-------------|
+| 1         | $1$          | Nodo raíz $n$ |
+| 2         | $2$          | $n-1$ y $n-2$ |
+| 3         | $4$          | Cada $n-1$ y $n-2$ generan dos nodos |
+| 4         | $8$          | Cada nodo del paso anterior se divide |
+| 5         | $16$         | Sigue la misma lógica |
+
+El número de nodos en el **último nivel** es aproximadamente:
 
 $$
-T(n) = T(n-1) + T(n-2) + O(1) \leq c \cdot 2^{n-1} + c \cdot 2^{n-2} + O(1)
+O(2^n)
 $$
 
-Simplificamos la expresión:
+#### **Paso 3 - Determinar la Complejidad Temporal por Nivel:**
 
-$$
-T(n) \leq c \cdot 2^{n-2}(2 + 1) + O(1) = \frac{3c}{4} \cdot 2^n + O(1)
-$$
+El **costo en cada nodo** es $O(1)$ porque solo realiza **una suma**.
 
-Para satisfacer la condición inicial $T(n) \leq c \cdot 2^n$, se escoge un valor suficientemente grande de $c$, por lo que la solución queda confirmada como:
+Ya que en cada nivel hay $2^k$ nodos y cada nodo tiene costo $O(1)$, el costo total por nivel es:
+
+- **Nivel 0**: $O(1)$ (1 nodo)
+- **Nivel 1**: $O(2)$ (2 nodos)
+- **Nivel 2**: $O(4)$ (4 nodos)
+- **Nivel k**: $O(2^k)$ ($2^k$ nodos)
+
+Como la **altura del árbol es $O(n)$**, en el último nivel $k = n$ y por lo tanto hay $O(2^n)$ nodos, por lo que la **complejidad total** del árbol es:
 
 $$
 T(n) = O(2^n)
 $$
+
+Esto debido a que k depende de la cantidad de la altura del árbol para estimar la cantidad de nodos al final del árbol, por lo tanto $k=n$.
+
+### **Resolución mediante Método de Sustitución (inducción matemática)**
+
+De manera formal:
+
+$$
+T(n) =
+\begin{cases}
+O(1), & \text{si } n \leq 1 \\
+T(n-1) + T(n-2) + O(1), & \text{si } n > 1
+\end{cases}
+$$
+
+#### **Paso 1 - Planteamiento de la hipótesis:**
+
+Queremos encontrar un límite superior para la función de recurrencia:
+
+$$
+T(n) = T(n-1) + T(n-2) + O(1)
+$$
+
+**Hipótesis:**  
+Suponemos que existe una constante $c$ tal que:
+
+$$
+T(n) \leq c \cdot 2^n
+$$
+
+para algún $c \in \mathbb{R}$, y verificamos si esta hipótesis es válida para todo $n$.
+
+#### **Paso 2 - Sustitución en la ecuación de recurrencia:**
+
+Tomamos la ecuación original:
+
+$$
+T(n) = T(n-1) + T(n-2) + O(1)
+$$
+
+y la **reemplazamos** usando la suposición $T(n) \leq c \cdot 2^n$. Para ello, evaluamos $T(n-1)$ y $T(n-2)$:
+
+$$
+T(n-1) \leq c \cdot 2^{n-1}, \quad T(n-2) \leq c \cdot 2^{n-2}
+$$
+
+Sustituyéndolo en la ecuación:
+
+$$
+T(n) \leq c \cdot 2^{n-1} + c \cdot 2^{n-2} + O(1)
+$$
+
+Llamemos a esta ecuación **(Ec1)**.
+
+#### **Paso 3 - Evaluación de la desigualdad:**
+
+Factorizamos $c$:
+
+$$
+T(n) \leq c (2^{n-1} + 2^{n-2}) + O(1)
+$$
+
+Usamos la relación de potencias:
+
+$$
+2^{n-1} + 2^{n-2} = 2^{n-2} (2 + 1) = 2^{n-2} \cdot 3
+$$
+
+Por lo que la ecuación se transforma en:
+
+$$
+T(n) \leq c \cdot 3 \cdot 2^{n-2} + O(1)
+$$
+
+Dado que $3 \cdot 2^{n-2} \leq 2^n$ para valores suficientemente grandes de $n$, podemos decir que:
+
+$$
+T(n) \leq c \cdot 2^n
+$$
+
+Esto demuestra que nuestra hipótesis se cumple.
+
+#### **Paso 4 - Verificación del caso base:**
+
+Ahora verificamos si la hipótesis también es válida en los casos base $n = 1$ y $n = 0$.
+
+Según la ecuación dada:
+
+$$
+T(1) = O(1), \quad T(0) = O(1)
+$$
+
+Y según nuestra hipótesis:
+
+$$
+T(1) \leq c \cdot 2^1 = 2c
+$$
+
+$$
+T(0) \leq c \cdot 2^0 = c
+$$
+
+Como $O(1)$ puede ser acotado por una constante adecuada, los valores base cumplen la hipótesis.
+
+#### **Conclusión**
+
+Dado que hemos demostrado por **sustitución** que:
+
+$$
+T(n) \leq c \cdot 2^n
+$$
+
+y que la desigualdad se mantiene en el caso base, concluimos que la **complejidad del algoritmo recursivo de Fibonacci es $O(2^n)$**.
 
 ### **Resolución usando el Método Maestro**
 
