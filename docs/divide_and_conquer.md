@@ -37,8 +37,6 @@ Al tener las soluciones óptimas para ambos subproblemas, simplemente escoges la
 
 ## 📌 Análisis del algoritmo DaC (Ecuación de Recurrencia)
 
-Planteamos la ecuación de recurrencia para analizar el algoritmo DaC descrito:
-
 Sea $T(n)$ el tiempo que tarda en resolverse el problema con tamaño $n$:
 
 $$
@@ -107,17 +105,7 @@ $$
 O(n)
 $$
 
-Podemos observar que el árbol es muy similar al árbol de recurrencia del problema de Fibonacci. Esto implica que el crecimiento del tiempo es exponencial.  
-
-Específicamente, la recurrencia coincide con la sucesión de Fibonacci, cuya solución conocida es exponencial:
-
-$$
-T(n) = O(2^n)
-$$
-
 #### **Paso 2 - Determinar la Cantidad de Nodos en Cada Nivel:**
-
-![Diagrama de Recursividad Por Nivel](../images/arbol_fjp.png)
 
 Como el algoritmo **siempre divide en dos subproblemas**, el número de nodos en cada nivel es $2^k$:
 
@@ -129,10 +117,12 @@ Como el algoritmo **siempre divide en dos subproblemas**, el número de nodos en
 | 4         | $8$          | Cada nodo del paso anterior se divide |
 | 5         | $16$         | Sigue la misma lógica |
 
+![Diagrama de Recursividad Por Nivel](arbol_fjp.png){height=150px}
+
 El número de nodos en el **último nivel** es aproximadamente:
 
 $$
-O(2^n)
+2^n
 $$
 
 #### **Paso 3 - Determinar la Complejidad Temporal por Nivel:**
@@ -166,104 +156,122 @@ T(n-1) + T(n-2) + O(1), & \text{si } n > 1
 \end{cases}
 $$
 
-#### **Paso 1 - Planteamiento de la hipótesis:**
+#### **Paso 1 - Planteamiento de la hipótesis**\newline
 
-Queremos encontrar un límite superior para la función de recurrencia:
+Aquí tienes el **método de sustitución corregido y adaptado específicamente al problema del Frog Jump**, manteniendo la claridad y formalidad:
 
-$$
-T(n) = T(n-1) + T(n-2) + O(1)
-$$
+## Método de Sustitución – Frog Jump Problem
 
-**Hipótesis:**  
-Suponemos que existe una constante $c$ tal que:
-
-$$
-T(n) \leq c \cdot 2^n
-$$
-
-para algún $c \in \mathbb{R}$, y verificamos si esta hipótesis es válida para todo $n$.
-
-#### **Paso 2 - Sustitución en la ecuación de recurrencia:**
-
-Tomamos la ecuación original:
+Queremos encontrar un límite superior para la función de recurrencia del algoritmo recursivo:
 
 $$
 T(n) = T(n-1) + T(n-2) + O(1)
 $$
 
-y la **reemplazamos** usando la suposición $T(n) \leq c \cdot 2^n$. Para ello, evaluamos $T(n-1)$ y $T(n-2)$:
+Esta representa el tiempo necesario para calcular la energía mínima hasta el escalón $n$ considerando dos saltos posibles: desde $n-1$ y $n-2$.
+
+### **Paso 1 - Hipótesis inductiva**
+
+Supongamos que existe una constante $c > 0$ tal que:
 
 $$
-T(n-1) \leq c \cdot 2^{n-1}, \quad T(n-2) \leq c \cdot 2^{n-2}
+T(k) \leq c \cdot 2^k \quad \text{para todo } k < n
 $$
 
-Sustituyéndolo en la ecuación:
+Queremos demostrar que también se cumple para $n$.
+
+### **Paso 2 - Sustitución en la ecuación de recurrencia**
+
+Partimos de:
 
 $$
-T(n) \leq c \cdot 2^{n-1} + c \cdot 2^{n-2} + O(1)
+T(n) = T(n-1) + T(n-2) + O(1)
 $$
 
-Llamemos a esta ecuación **(Ec1)**.
-
-#### **Paso 3 - Evaluación de la desigualdad:**
-
-Factorizamos $c$:
+Aplicando la hipótesis inductiva a $T(n-1)$ y $T(n-2)$:
 
 $$
-T(n) \leq c (2^{n-1} + 2^{n-2}) + O(1)
+T(n) \leq c \cdot 2^{n-1} + c \cdot 2^{n-2} + d \quad \text{para alguna constante } d
 $$
 
-Usamos la relación de potencias:
+Factorizando $c$:
 
 $$
-2^{n-1} + 2^{n-2} = 2^{n-2} (2 + 1) = 2^{n-2} \cdot 3
+T(n) \leq c \left(2^{n-1} + 2^{n-2}\right) + d
 $$
 
-Por lo que la ecuación se transforma en:
+Usando propiedades de potencias:
 
 $$
-T(n) \leq c \cdot 3 \cdot 2^{n-2} + O(1)
+2^{n-1} + 2^{n-2} = 2^{n-2}(2 + 1) = 3 \cdot 2^{n-2}
 $$
 
-Dado que $3 \cdot 2^{n-2} \leq 2^n$ para valores suficientemente grandes de $n$, podemos decir que:
+Entonces:
+
+$$
+T(n) \leq c \cdot 3 \cdot 2^{n-2} + d
+$$
+
+Queremos probar que:
 
 $$
 T(n) \leq c \cdot 2^n
 $$
 
-Esto demuestra que nuestra hipótesis se cumple.
-
-#### **Paso 4 - Verificación del caso base:**
-
-Ahora verificamos si la hipótesis también es válida en los casos base $n = 1$ y $n = 0$.
-
-Según la ecuación dada:
+Sabemos que:
 
 $$
-T(1) = O(1), \quad T(0) = O(1)
+3 \cdot 2^{n-2} = \frac{3}{4} \cdot 2^n
 $$
 
-Y según nuestra hipótesis:
+Entonces:
 
 $$
+T(n) \leq \frac{3}{4} c \cdot 2^n + d
+$$
+
+Si elegimos $c$ lo suficientemente grande para absorber $d$, existe una constante $c'$ tal que:
+
+$$
+T(n) \leq c' \cdot 2^n
+$$
+
+Por lo tanto, se mantiene la hipótesis.
+
+### **Paso 3 - Verificación del caso base**
+
+Para $n = 0$ y $n = 1$, se define:
+
+- $T(0) = 0$
+- $T(1) = |heights[1] - heights[0]| = O(1)$
+
+Y según la hipótesis:
+
+$$
+T(0) \leq c \cdot 2^0 = c \\
 T(1) \leq c \cdot 2^1 = 2c
 $$
 
+Esto es válido para $c \geq 1$.
+
+### **Conclusión**
+
+Como:
+
+- Se cumple la desigualdad para el caso base.
+- Se mantiene para $n$ si se cumple para $k < n$.
+
+Entonces, por **inducción**, la recurrencia:
+
 $$
-T(0) \leq c \cdot 2^0 = c
+T(n) = T(n-1) + T(n-2) + O(1)
 $$
 
-Como $O(1)$ puede ser acotado por una constante adecuada, los valores base cumplen la hipótesis.
-
-#### **Conclusión**
-
-Dado que hemos demostrado por **sustitución** que:
+tiene solución asintótica:
 
 $$
-T(n) \leq c \cdot 2^n
+T(n) = O(2^n)
 $$
-
-y que la desigualdad se mantiene en el caso base, concluimos que la **complejidad del algoritmo recursivo de Fibonacci es $O(2^n)$**.
 
 ### **Resolución usando el Método Maestro**
 
