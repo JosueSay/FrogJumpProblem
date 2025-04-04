@@ -232,15 +232,13 @@ Por lo tanto, se mantiene la hipótesis.
 
 #### **Paso 3 - Verificación del caso base**
 
-Para $n = 0$ y $n = 1$, se define:
+Para $n = 1$, se define:
 
-- $T(0) = 0$
-- $T(1) = |heights[1] - heights[0]| = O(1)$
+- $T(1) = O(1)$
 
 Y según la hipótesis:
 
 $$
-T(0) \leq c \cdot 2^0 = c \\
 T(1) \leq c \cdot 2^1 = 2c
 $$
 
