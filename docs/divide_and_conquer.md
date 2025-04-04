@@ -81,7 +81,7 @@ graph TD
 #### **Paso 1 - Determinar la Altura del Árbol:**
 
 El árbol no crece de manera **proporcional**, ya que la rama **izquierda** resta $n-1$ al tamaño y la **derecha** $n-2$.  
-Si tomamos el **camino más largo** (la rama izquierda), podemos determinar que **para el peor de los casos** el árbol tendrá aproximadamente **$O(n)$ niveles**, porque en cada iteración se resta **1** hasta llegar a $n = 1$. Utilizando un ejemplo para 4 escalones:
+Si tomamos el **camino más largo** (la rama izquierda), podemos determinar que **para el peor de los casos** el árbol tendrá **$n$ niveles**, porque en cada iteración se resta **1** hasta llegar a $n = 1$. Utilizando un ejemplo para 4 escalones:
 
 ```mermaid
 graph TD
@@ -99,10 +99,10 @@ style E1a stroke:#900,stroke-width:1px
 style E1b stroke:#900,stroke-width:1px
 ```
 
-Por lo tanto, la altura del árbol es aproximadamente:
+Por lo tanto, la altura del árbol es:
 
 $$
-O(n)
+n
 $$
 
 #### **Paso 2 - Determinar la Cantidad de Nodos en Cada Nivel:**
@@ -136,13 +136,11 @@ Ya que en cada nivel hay $2^k$ nodos y cada nodo tiene costo $O(1)$, el costo to
 - **Nivel 2**: $O(4)$ (4 nodos)
 - **Nivel k**: $O(2^k)$ ($2^k$ nodos)
 
-Como la **altura del árbol es $O(n)$**, en el último nivel $k = n$ y por lo tanto hay $O(2^n)$ nodos, por lo que la **complejidad total** del árbol es:
+Como la **altura del árbol es $n$**, en el último nivel hay $O(2^n)$ nodos, por lo que la **complejidad total** del árbol es:
 
 $$
 T(n) = O(2^n)
 $$
-
-Esto debido a que k depende de la cantidad de la altura del árbol para estimar la cantidad de nodos al final del árbol, por lo tanto $k=n$.
 
 ### **Resolución mediante Método de Sustitución (inducción matemática)**
 
