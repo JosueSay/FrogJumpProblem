@@ -45,20 +45,82 @@ Esta ecuación indica que la solución óptima para el escalón `n` depende excl
 
 ### **Demostración por Reducción al Absurdo**
 
-Supongamos que existe una forma óptima de llegar al escalón final (`N`), con energía total mínima $E(N)$, y que ésta no incluye soluciones óptimas para los subproblemas anteriores (`N-1` o `N-2`).
+#### Queremos demostrar
 
-- Sea $E(N)$ la solución óptima para alcanzar el escalón `N`. Supongamos que esta solución utiliza el camino óptimo al escalón `N-1` o al escalón `N-2`.
+> La solución óptima para alcanzar el escalón $N$, denotada como $E(N)$, **debe estar compuesta por soluciones óptimas** de los subproblemas $E(N-1)$ o $E(N-2)$.
 
-- Supongamos ahora lo contrario, es decir, que la solución utilizada para `N-1` o `N-2` no es óptima. Esto implicaría que existe una solución alternativa que consume menos energía para estos escalones previos.
+#### Supongamos lo contrario (hipótesis falsa)
 
-- Entonces, podríamos sustituir la solución actual (no óptima) en el camino original por esta solución alternativa más eficiente. Como consecuencia, la energía total para llegar a `N` sería menor que la solución original $E(N)$, contradiciendo que esta era la solución óptima inicialmente planteada.
+> Existe una solución óptima $E(N)$ que **no utiliza las soluciones óptimas** de $E(N-1)$ ni $E(N-2)$, sino caminos subóptimos para llegar a esos escalones.
 
-**Conclusión:**  
-Por lo tanto, la solución original necesariamente incluye soluciones óptimas a sus subproblemas, cumpliendo así la propiedad de **subestructura óptima**.
+#### Entonces
+
+- Supongamos que el camino usado por $E(N)$ llega desde $N-1$, pero la energía usada para llegar a $N-1$ **no es mínima**.
+- Es decir, existe una mejor forma (más eficiente) de llegar a $N-1$; llamémosla $E'(N-1)$, tal que:
+
+$$
+E'(N-1) < E(N-1)
+$$
+
+- La energía total de $E(N)$, usando este nuevo camino, sería:
+
+$$
+E_{\text{nuevo}}(N) = E'(N-1) + |heights[N] - heights[N-1]|
+$$
+
+#### Comparación
+
+Ya que $E'(N-1) < E(N-1)$, entonces:
+
+$$
+E_{\text{nuevo}}(N) < E(N-1) + |heights[N] - heights[N-1]| = E(N)
+$$
+
+#### Contradicción
+
+Esto implica que hemos encontrado una forma **más barata** de llegar al escalón $N$, es decir:
+
+$$
+E_{\text{nuevo}}(N) < E(N)
+$$
+
+Pero esto **contradice** la suposición inicial de que $E(N)$ era la solución **óptima**.
+
+#### Conclusión
+
+La hipótesis es falsa.  
+Por lo tanto, **la solución óptima $E(N)$ necesariamente utiliza soluciones óptimas a los subproblemas** $E(N-1)$ o $E(N-2)$.
+
+**Se cumple la propiedad de subestructura óptima.**
 
 ## 📌 2. Demostración de Subproblemas Traslapados
 
 Un problema tiene subproblemas traslapados si se calcula repetidamente la misma solución varias veces durante el proceso recursivo.
+
+```mermaid
+graph TD
+    style En2 stroke:#4CAF50,stroke-width:3px
+    style En1a stroke:#4CAF50,stroke-width:3px
+
+    style En1b stroke:#2196F3,stroke-width:3px
+    style En2a stroke:#2196F3,stroke-width:3px
+
+    En["E(n)"]
+    En1["E(n-1)"]
+    En2["E(n-2)"]
+    En -->|"salto de 1 escalón"| En1
+    En -->|"salto de 2 escalones"| En2
+
+    En1a["E(n-2)"]
+    En1b["E(n-3)"]
+    En1 --> En1a
+    En1 --> En1b
+
+    En2a["E(n-3)"]
+    En2b["E(n-4)"]
+    En2 --> En2a
+    En2 --> En2b
+```
 
 ### **Pasos para demostrar Subproblemas Traslapados**
 
