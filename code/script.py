@@ -154,4 +154,4 @@ def comparar_algoritmos(modo_test=True):
 
 
 
-comparar_algoritmos(modo_test=False) # Cambia a False para validar resultados
+comparar_algoritmos(modo_test=True)

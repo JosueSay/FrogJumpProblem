@@ -146,6 +146,8 @@ plt.show()
 
 ## Comparación y Conclusiones
 
+![Resultados por Tiempo](../images/resultados.png "Resultados por Tiempo")
+
 | Enfoque            | Complejidad | Escalabilidad | Tiempo (N=10,000)                 |
 | ------------------ | ----------- | ------------- | --------------------------------- |
 | Divide and Conquer | $O(2^n)$  | Mala          | Inviable (se detiene antes de 50) |
