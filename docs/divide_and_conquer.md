@@ -156,12 +156,6 @@ T(n-1) + T(n-2) + O(1), & \text{si } n > 1
 \end{cases}
 $$
 
-#### **Paso 1 - Planteamiento de la hipótesis**\newline
-
-Aquí tienes el **método de sustitución corregido y adaptado específicamente al problema del Frog Jump**, manteniendo la claridad y formalidad:
-
-## Método de Sustitución – Frog Jump Problem
-
 Queremos encontrar un límite superior para la función de recurrencia del algoritmo recursivo:
 
 $$
@@ -170,7 +164,7 @@ $$
 
 Esta representa el tiempo necesario para calcular la energía mínima hasta el escalón $n$ considerando dos saltos posibles: desde $n-1$ y $n-2$.
 
-### **Paso 1 - Hipótesis inductiva**
+#### **Paso 1 - Hipótesis inductiva**
 
 Supongamos que existe una constante $c > 0$ tal que:
 
@@ -180,7 +174,7 @@ $$
 
 Queremos demostrar que también se cumple para $n$.
 
-### **Paso 2 - Sustitución en la ecuación de recurrencia**
+#### **Paso 2 - Sustitución en la ecuación de recurrencia**
 
 Partimos de:
 
@@ -238,7 +232,7 @@ $$
 
 Por lo tanto, se mantiene la hipótesis.
 
-### **Paso 3 - Verificación del caso base**
+#### **Paso 3 - Verificación del caso base**
 
 Para $n = 0$ y $n = 1$, se define:
 
@@ -254,7 +248,7 @@ $$
 
 Esto es válido para $c \geq 1$.
 
-### **Conclusión**
+#### **Conclusión**
 
 Como:
 
