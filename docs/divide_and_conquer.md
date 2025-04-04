@@ -76,9 +76,9 @@ graph TD
     E2 --> E1a["E(1)=0"]
     E2a --> E1b["E(1)=0"]
 
-style E1 fill:#1a9,stroke:#900,stroke-width:1px
-style E1a fill:#1a9,stroke:#900,stroke-width:1px
-style E1b fill:#1a9,stroke:#900,stroke-width:1px
+style E1 stroke:#900,stroke-width:1px
+style E1a stroke:#900,stroke-width:1px
+style E1b stroke:#900,stroke-width:1px
 ```
 
 Podemos observar que el árbol es muy similar al árbol de recurrencia del problema de Fibonacci. Esto implica que el crecimiento del tiempo es exponencial.  
